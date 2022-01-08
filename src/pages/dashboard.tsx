@@ -32,6 +32,7 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import getErrorInfo from '../errorInfo'
 import { useNavigate } from 'react-router-dom';
 
 export default function Dashboard() {
@@ -46,6 +47,7 @@ export default function Dashboard() {
   React.useEffect(() => {  // 仪表板初始化钩子
     if (auth.id && auth.id !== 'null') {
       getUserBase(auth.id, (gotUserBase: UserBaseResponse) => {
+        console.log(gotUserBase);
         let getUserBasePromise = new Promise<void>((resolve, reject) => {
           setUserBase(gotUserBase);
           resolve();
@@ -58,7 +60,7 @@ export default function Dashboard() {
   }, [auth.id]);
 
   React.useEffect(() => {  // userBase处理钩子
-    if (userBase.value) {
+    if (userBase.value?.recent_score) {
       switch (userBase.value.recent_score.difficulty) {
         case 0: {
           setRecentDifficultyText('PST');
@@ -135,7 +137,7 @@ export default function Dashboard() {
           setSnackState({
             open: true,
             severity: 'error',
-            message: '遇到了未知错误(' + changeResp.error_code + ')'
+            message: getErrorInfo(changeResp.error_code)
           })
         }
       }
@@ -167,7 +169,7 @@ export default function Dashboard() {
           setSnackState({
             open: true,
             severity: 'error',
-            message: '遇到了未知错误(' + changeResp.error_code + ')'
+            message: getErrorInfo(changeResp.error_code)
           })
         }
       })
@@ -185,7 +187,7 @@ export default function Dashboard() {
         setSnackState({
           open: true,
           severity: 'error',
-          message: '遇到了未知错误(' + data.error_code + ')'
+          message: getErrorInfo(data.error_code)
         })
       }
       setUploadDialogOpen(true);
@@ -205,7 +207,7 @@ export default function Dashboard() {
         setSnackState({
           open: true,
           severity: 'error',
-          message: '遇到了未知错误(' + data.error_code + ')'
+          message: getErrorInfo(data.error_code)
         })
       }
     })
@@ -216,7 +218,7 @@ export default function Dashboard() {
   return (
     <Box>
       {!fadeState && (<Box sx={{ display: 'flex' }} justifyContent="center">
-        <CircularProgress disableShrink sx={{mt: 4}} />
+        <CircularProgress disableShrink sx={{ mt: 4 }} />
       </Box>)}
       <Fade in={fadeState}>
         <Container maxWidth='md'>
@@ -247,7 +249,7 @@ export default function Dashboard() {
                 </Grid>
               </Grid>
             </Paper>
-            <Paper
+            {userBase.value?.recent_score && <Paper
               sx={{ mt: 4, p: { xs: 2, md: 4 } }}
             >
               <Stack>
@@ -299,7 +301,7 @@ export default function Dashboard() {
                   </Grid>
                 </Grid>
               </Stack>
-            </Paper>
+            </Paper>}
             <Paper
               sx={{ mt: { xs: 2, md: 4 }, p: { xs: 2, md: 4 } }}
             >

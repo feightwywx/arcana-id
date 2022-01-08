@@ -11,6 +11,7 @@ import Fade from '@mui/material/Fade';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import getErrorInfo from '../errorInfo'
 import {useNavigate} from "react-router-dom";
 
 export default function LoginPage() {
@@ -60,7 +61,7 @@ export default function LoginPage() {
           setSnackState({
             open: true,
             severity: 'error',
-            message: '遇到了未知错误(' + authResp.error_code + ')'
+            message: getErrorInfo(authResp.error_code)
           })
         }
       });

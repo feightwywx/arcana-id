@@ -27,7 +27,7 @@ export interface UserBaseResponse {
     name: string,
     user_code: string,
     rating: number,
-    recent_score: ScoreType
+    recent_score?: ScoreType
   },
   error_code?: number
 }
@@ -132,7 +132,7 @@ export function getUserBase(id: string, callback: Function) {
   ).then(
     jsonResp => {
       if (jsonResp['success'] === true) {
-        let recent_score = JSON.parse(jsonResp['value']['recent_score'])
+        let recent_score = jsonResp['value']['recent_score'] ? JSON.parse(jsonResp['value']['recent_score']) : null;
         let userbase: UserBaseResponse = {
           success: jsonResp['success'],
           value: {
@@ -140,8 +140,10 @@ export function getUserBase(id: string, callback: Function) {
             name: jsonResp['value']['name'],
             user_code: jsonResp['value']['user_code'],
             rating: jsonResp['value']['rating'],
-            recent_score: recent_score
           }
+        }
+        if (userbase.value && recent_score) {
+          userbase.value.recent_score = recent_score;
         }
         callback(userbase);
       } else {
