@@ -1,20 +1,22 @@
-import React from 'react';
 import './App.css';
+
+import { AuthResponse, arcanaAuthProvider, getIdByUsername } from './auth';
 import {
-  Routes,
-  Route,
-  useLocation,
   Navigate,
+  Route,
+  Routes,
+  useLocation,
 } from 'react-router-dom';
-import Layout from './pages/layout';
-import Dashboard from './pages/dashboard';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
 import Best30Page from './pages/b30Page';
+import CssBaseline from '@mui/material/CssBaseline';
+import Dashboard from './pages/dashboard';
+import Layout from './pages/layout';
 import LoginPage from './pages/loginPage';
-import { arcanaAuthProvider, AuthResponse, getIdByUsername } from './auth';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import React from 'react';
 import { blue } from '@mui/material/colors';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import CssBaseline from '@mui/material/CssBaseline';
 
 function App() {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');

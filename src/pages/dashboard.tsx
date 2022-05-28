@@ -47,7 +47,7 @@ export default function Dashboard() {
   React.useEffect(() => {  // 仪表板初始化钩子
     if (auth.id && auth.id !== 'null') {
       getUserBase(auth.id, (gotUserBase: UserBaseResponse) => {
-        console.log(gotUserBase);
+        // console.log(gotUserBase);
         let getUserBasePromise = new Promise<void>((resolve, reject) => {
           setUserBase(gotUserBase);
           resolve();

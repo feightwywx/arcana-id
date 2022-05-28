@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Outlet, Link as RouterLink, useNavigate } from "react-router-dom";
+import { Outlet, Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import AppBar from '@mui/material/AppBar';
@@ -9,6 +9,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
+import Link from '@mui/material/Link';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -24,6 +25,9 @@ export default function Layout() {
   ];
   let auth = React.useContext(AuthContext)
   let navigate = useNavigate();
+  let path = useLocation().pathname
+  let isLoginPage = path === '/login';
+  // console.log(path)
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -160,6 +164,9 @@ export default function Layout() {
       </Slide>
       <Container>
         <Outlet />
+        <Container maxWidth={isLoginPage ? 'sm' : 'md'} sx={{mt: isLoginPage ? 3 : 0, mb: 4, textAlign: 'center'}}>
+          <Link component={RouterLink} to='https://beian.miit.gov.cn/'>黔ICP备2022001114号-1</Link>
+        </Container>
       </Container>
     </Box>
   );
