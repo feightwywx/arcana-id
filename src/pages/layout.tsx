@@ -165,7 +165,7 @@ export default function Layout() {
       <Container>
         <Outlet />
         <Container maxWidth={isLoginPage ? 'sm' : 'md'} sx={{mt: isLoginPage ? 3 : 0, mb: 4, textAlign: 'center'}}>
-          <Link component={RouterLink} to='https://beian.miit.gov.cn/'>黔ICP备2022001114号-1</Link>
+          <Link href='https://beian.miit.gov.cn/'>黔ICP备2022001114号-1</Link>
         </Container>
       </Container>
     </Box>
